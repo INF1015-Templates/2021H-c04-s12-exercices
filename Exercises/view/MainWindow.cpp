@@ -8,7 +8,8 @@
 
 MainWindow::MainWindow(combat::CombatManager* combatMngr, QWidget* parent)
 : QMainWindow(parent),
-  combatMngr_(combatMngr) {
+  combatMngr_(combatMngr),
+  mediaPlayer_(std::make_unique<QMediaPlayer>()){
 	ui.reset(new Ui::MainWindow());
 	ui->setupUi(this);
 
@@ -27,6 +28,7 @@ MainWindow::MainWindow(combat::CombatManager* combatMngr, QWidget* parent)
 	connect(ui->passBonusActionBtn, SIGNAL(clicked()), this, SLOT(passBonusAction()));
 	connect(ui->actionSelect, SIGNAL(activated(int)), this, SLOT(updateTakeActionBtn(int)));
 	connect(ui->bonusActionSelect, SIGNAL(activated(int)), this, SLOT(updateTakeBonusActionBtn(int)));
+	connect(ui->volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(setVolume(int)));
 
 	connect(combatMngr_, SIGNAL(message(const QString&)), this, SLOT(addMsgToCombatLog(const QString&)));
 	connect(combatMngr_->getNpcTurn(), SIGNAL(message(const QString&)), this, SLOT(addMsgToCombatLog(const QString&)));
@@ -52,6 +54,10 @@ MainWindow::MainWindow(combat::CombatManager* combatMngr, QWidget* parent)
 	updateUi();
 
 	combatMngr->startCurrentTurn();
+
+	mediaPlayer_->setMedia(QUrl::fromLocalFile("assets/Locrian_Ipsum.mp3"));
+	setVolume(ui->volumeSlider->value());
+	mediaPlayer_->play();
 }
 
 MainWindow::~MainWindow() {
@@ -103,6 +109,11 @@ void MainWindow::addMsgToCombatLog(const QString& msg) {
 
 void MainWindow::scrollToBottomOfLog(int rangeMin, int rangeMax) {
 	ui->scrollArea->verticalScrollBar()->setValue(rangeMax);
+}
+
+void MainWindow::setVolume(int value) {
+	int volume = int(1.0 * value / ui->volumeSlider->maximum() * 100);
+	mediaPlayer_->setVolume(volume);
 }
 
 void MainWindow::takeAction() {

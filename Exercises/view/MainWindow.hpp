@@ -4,6 +4,7 @@
 #include <memory>
 
 #include <QMainWindow>
+#include <QMediaPlayer>
 
 #include <combat/CombatManager.hpp>
 
@@ -24,6 +25,7 @@ public slots:
 	void updateTakeBonusActionBtn(int index);
 	void addMsgToCombatLog(const QString& msg);
 	void scrollToBottomOfLog(int rangeMin, int rangeMax);
+	void setVolume(int value);
 	void takeAction();
 	void passAction();
 	void takeBonusAction();
@@ -32,6 +34,7 @@ public slots:
 
 private:
 	std::unique_ptr<Ui::MainWindow> ui;
+	std::unique_ptr<QMediaPlayer> mediaPlayer_;
 	combat::CombatManager* combatMngr_;
 	combat::Turn* npcTurn_;
 	combat::Turn* playerTurn_;
