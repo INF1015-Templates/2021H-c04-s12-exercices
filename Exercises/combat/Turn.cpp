@@ -70,7 +70,7 @@ void Turn::takeBonusAction(int index) {
 }
 
 void Turn::end() {
-	emit message(tr("End of turn"));
+	emit message(tr("End of turn" "\n"));
 	emit ended();
 }
 
