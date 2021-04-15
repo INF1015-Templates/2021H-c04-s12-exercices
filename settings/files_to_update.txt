@@ -4,5 +4,12 @@ settings/variables.txt
 README.md
 
 Exercises/main.cpp
-Exercises/utils/MyClass.cpp
-Exercises/utils/print.cpp
+Exercises/characters/BasicCharacters.hpp
+Exercises/characters/BasicCharacters.cpp
+Exercises/combat/CombatManager.hpp
+Exercises/combat/CombatManager.cpp
+Exercises/combat/Turn.hpp
+Exercises/combat/Turn.cpp
+Exercises/utils/Die.hpp
+Exercises/view/MainWindow.hpp
+Exercises/view/MainWindow.cpp
