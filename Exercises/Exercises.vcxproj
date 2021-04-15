@@ -112,6 +112,7 @@
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
       <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
     </ClCompile>
+    <ClCompile Include="combat\classes\FighterTurn.cpp" />
     <ClCompile Include="combat\classes\MonkTurn.cpp" />
     <ClCompile Include="combat\CombatManager.cpp">
       <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
@@ -151,6 +152,7 @@
     <ClInclude Include="combat\BaseActivity.hpp" />
     <QtMoc Include="combat\classes\MonkTurn.hpp" />
     <QtMoc Include="combat\CombatManager.hpp" />
+    <QtMoc Include="combat\classes\FighterTurn.hpp" />
     <ClInclude Include="combat\fwddecl.hpp" />
     <QtMoc Include="combat\MeleeWeaponAttack.hpp" />
     <QtMoc Include="combat\Turn.hpp" />

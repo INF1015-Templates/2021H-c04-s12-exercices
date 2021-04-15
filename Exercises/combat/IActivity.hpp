@@ -26,8 +26,6 @@ public:
 	virtual characters::AbstractCharacter* getCharacter() const = 0;
 	virtual void connectWithTurn(Turn*) { };
 	virtual bool isAvailable() const = 0;
-
-public:
 	virtual void apply(characters::AbstractCharacter* target) = 0;
 
 signals:

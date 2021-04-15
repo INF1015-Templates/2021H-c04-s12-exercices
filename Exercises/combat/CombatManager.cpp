@@ -13,6 +13,7 @@
 
 #include <combat/Turn.hpp>
 #include <combat/classes/MonkTurn.hpp>
+#include <combat/classes/FighterTurn.hpp>
 #include <weapons/melee/GenericMeleeWeapon.hpp>
 
 #include "CombatManager.hpp"
@@ -61,7 +62,7 @@ void CombatManager::init() {
 }
 
 void CombatManager::loadCharacters() {
-	static const int charLevel = 10;
+	static const int charLevel = 20;
 
 	auto staff      = std::make_unique<weapons::melee::Quarterstaff>("Quarterstaff +1", +1);
 	auto shortsword = std::make_unique<weapons::melee::Shortsword>("Shortsword +1", +1);
@@ -76,18 +77,20 @@ void CombatManager::loadCharacters() {
 		{stats::CHA, 8}
 	};
 	auto monk1 = std::make_unique<characters::classes::Monk>("Fast Boi", abilities1);
-	//monk1->equipWeapon(std::move(staff));
-	//monk1->getWeapon()->wieldTwoHanded();
+	monk1->equipWeapon(std::move(staff));
+	monk1->getWeapon()->wieldTwoHanded();
 
-	//stats::Ability abilities2[] = {
-	//	{stats::STR, 18},
-	//	{stats::DEX, 13},
-	//	{stats::CON, 16},
-	//	{stats::INT, 10},
-	//	{stats::WIS, 10},
-	//	{stats::CHA, 8}
-	//};
-	//auto fighter1 = std::make_unique<characters::classes::Fighter>("Stronk Boi", abilities2);
+	stats::Ability abilities2[] = {
+		{stats::STR, 18},
+		{stats::DEX, 13},
+		{stats::CON, 16},
+		{stats::INT, 10},
+		{stats::WIS, 10},
+		{stats::CHA, 8}
+	};
+	auto fighter1 = std::make_unique<characters::classes::Fighter>("Stronk Boi", abilities2);
+	fighter1->equipWeapon(std::move(greatsword));
+	fighter1->setArmorClass(18);
 
 	stats::Ability abilities3[] = {
 		{stats::STR,  8},
@@ -102,13 +105,16 @@ void CombatManager::loadCharacters() {
 
 	for (int i : iter::range(charLevel - 1)) {
 		monk1->levelUp(true);
-		//fighter1->levelUp(true);
+		fighter1->levelUp(true);
 		monk2->levelUp(true);
 	}
 
-	playerTurn_ = std::make_unique<classes::MonkTurn>(monk1.get(), monk2.get());
-	npcTurn_ = std::make_unique<classes::MonkTurn>(monk2.get(), monk1.get());
-	playerCharacter_ = std::move(monk1);
+	//playerTurn_ = std::make_unique<classes::MonkTurn>(monk1.get(), monk2.get());
+	//npcTurn_ = std::make_unique<classes::MonkTurn>(monk2.get(), monk1.get());
+	//playerCharacter_ = std::move(monk1);
+	playerTurn_ = std::make_unique<classes::FighterTurn>(fighter1.get(), monk2.get());
+	npcTurn_ = std::make_unique<classes::MonkTurn>(monk2.get(), fighter1.get());
+	playerCharacter_ = std::move(fighter1);
 	npcCharacter_ = std::move(monk2);
 }
 
@@ -117,9 +123,9 @@ void CombatManager::startCurrentTurn() {
 		return;
 	turns_[0]->start();
 	if (getCurrentTurn() == getNpcTurn()) {
-		// Whatever on fait une attaque.
-		getCurrentTurn()->takeAction(0);
-		getCurrentTurn()->takeBonusAction(-1);
+		// Whatever on fait toutes les attaques.
+		getCurrentTurn()->takeAction(1);
+		getCurrentTurn()->takeBonusAction(0);
 	}
 }
 

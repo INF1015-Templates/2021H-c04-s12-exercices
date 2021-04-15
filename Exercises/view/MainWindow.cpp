@@ -46,6 +46,9 @@ MainWindow::MainWindow(combat::CombatManager* combatMngr, QWidget* parent)
 	auto&& level = combatMngr_->getPlayerCharacter()->getLevel();
 	ui->playerCharLabel->setText(tr("%1, %2 (Lvl %3)").arg(name).arg(className).arg(level));
 
+	int ac = combatMngr_->getPlayerCharacter()->getArmorClass();
+	ui->acLabel->setText(tr("%1").arg(ac));
+
 	updateUi();
 
 	combatMngr->startCurrentTurn();

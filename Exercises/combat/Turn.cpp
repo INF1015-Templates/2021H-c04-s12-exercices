@@ -51,7 +51,7 @@ void Turn::start() {
 
 void Turn::takeAction(int index) {
 	auto* activity = (index != -1) ? actions_.at(index) : nullptr;
-	if (activity != nullptr)
+	if (activity != nullptr and activity->isAvailable())
 		activity->apply(opponent_);
 	actionAvailable_ = false;
 	emit actionTaken();
@@ -61,7 +61,7 @@ void Turn::takeAction(int index) {
 
 void Turn::takeBonusAction(int index) {
 	auto* activity = (index != -1) ? bonusActions_.at(index) : nullptr;
-	if (activity != nullptr)
+	if (activity != nullptr and activity->isAvailable())
 		activity->apply(opponent_);
 	bonusActionAvailable_ = false;
 	emit bonusActionTaken();

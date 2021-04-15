@@ -110,6 +110,9 @@
     <ClCompile Include="combat\CombatManager.cpp">
       <Filter>Source Files\combat</Filter>
     </ClCompile>
+    <ClCompile Include="combat\classes\FighterTurn.cpp">
+      <Filter>Source Files\combat\classes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
@@ -194,6 +197,9 @@
     </QtMoc>
     <QtMoc Include="combat\CombatManager.hpp">
       <Filter>Header Files\combat</Filter>
+    </QtMoc>
+    <QtMoc Include="combat\classes\FighterTurn.hpp">
+      <Filter>Header Files\combat\classes</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
