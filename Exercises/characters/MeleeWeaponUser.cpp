@@ -37,8 +37,11 @@ int MeleeWeaponUser::getAttackAbilityModifier() const {
 std::tuple<int, int, bool> MeleeWeaponUser::rollMeleeWeaponAttack() {
 	int natRoll = utils::dice::d20.roll();
 	int attackRoll = natRoll + getProficiencyBonus() + weapon_->getAttackBonus() + getAttackAbilityModifier();
-	bool isCrit = natRoll == 20;
-	return {natRoll, attackRoll, isCrit};
+	bool isCritHit = natRoll == 20;
+	bool isCritMiss = natRoll == 1;
+	if (isCritMiss)
+		return {natRoll, 0, false};
+	return {natRoll, attackRoll, isCritHit};
 }
 
 int MeleeWeaponUser::rollMeleeWeaponDamage(bool crit) {

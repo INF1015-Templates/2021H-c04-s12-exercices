@@ -120,6 +120,9 @@ std::tuple<int, int, bool> BasicCharacter<HitDiceType>::rollUnarmedAttack() {
 	int natRoll = utils::dice::d20.roll();
 	int totalRoll = natRoll + getProficiencyBonus() + getStrengthModifier();
 	bool isCrit = natRoll == 20;
+	bool isCritMiss = natRoll == 1;
+	if (isCritMiss)
+		return {natRoll, 0, false};
 	return {natRoll, totalRoll, isCrit};
 }
 

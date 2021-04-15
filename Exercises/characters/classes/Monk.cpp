@@ -46,7 +46,10 @@ std::tuple<int, int, bool> Monk::rollUnarmedAttack() {
 	using namespace utils::dice;
 	int natRoll = d20.roll();
 	int totalRoll = natRoll + getProficiencyBonus() + getDexterityModifier();
-	bool isCrit = natRoll == 20;
+	bool isCritHit = natRoll == 20;
+	bool isCritMiss = natRoll == 1;
+	if (isCritMiss)
+		return {natRoll, 0, false};
 	return {natRoll, totalRoll, isCrit};
 }
 

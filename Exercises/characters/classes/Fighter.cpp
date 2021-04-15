@@ -42,6 +42,9 @@ std::tuple<int, int, bool> Fighter::rollMeleeWeaponAttack() {
 	int natRoll = utils::dice::d20.roll();
 	int totalRoll = natRoll + getProficiencyBonus() + weapon_->getAttackBonus() + getStrengthModifier();
 	bool isCrit = natRoll == 20;
+	bool isCritMiss = natRoll == 1;
+	if (isCritMiss)
+		return {natRoll, 0, false};
 	if (getLevel() >= 15)
 		isCrit = natRoll >= 18;
 	else if (getLevel() >= 3)
