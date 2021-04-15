@@ -1,14 +1,4 @@
-# Exceptions et autres éléments divers
+# Révision
 
-## Dans `company/`
-
-L'exemple de gestionnaire d'employés de la semaine dernière, mais seulement la partie modèle dans son propre namespace.
-
-## Dans `view/`
-
-Les fichiers sources et d'interface de la couche vue de l'exemple de compagnie.
-
-## Dans `utils`
-
-Classes et fonctions utilitaires pour les exemples.
+Des éléments de jeu qui ressemblent aux règles de D&D. Ça couvre pas mal toute la matière sauf les algorithmes et les exceptions.
 
