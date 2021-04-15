@@ -15,34 +15,6 @@ MainWindow::MainWindow(combat::CombatManager* combatMngr, QWidget* parent)
 
 	combatMngr_->init();
 
-	connect(combatMngr_->getPlayerTurn(), SIGNAL(started()), this, SLOT(updateUi()));
-	connect(combatMngr_->getPlayerTurn(), SIGNAL(actionTaken()), this, SLOT(updateUi()));
-	connect(combatMngr_->getPlayerTurn(), SIGNAL(bonusActionTaken()), this, SLOT(updateUi()));
-	connect(combatMngr_->getPlayerTurn(), SIGNAL(ended()), this, SLOT(updateUi()));
-	connect(combatMngr_->getNpcTurn(), SIGNAL(ended()), this, SLOT(updateUi()));
-	connect(ui->scrollArea->verticalScrollBar(), SIGNAL(rangeChanged(int, int)), this, SLOT(scrollToBottomOfLog(int, int)));
-
-	connect(ui->takeActionBtn, SIGNAL(clicked()), this, SLOT(takeAction()));
-	connect(ui->passActionBtn, SIGNAL(clicked()), this, SLOT(passAction()));
-	connect(ui->takeBonusActionBtn, SIGNAL(clicked()), this, SLOT(takeBonusAction()));
-	connect(ui->passBonusActionBtn, SIGNAL(clicked()), this, SLOT(passBonusAction()));
-	connect(ui->actionSelect, SIGNAL(activated(int)), this, SLOT(updateTakeActionBtn(int)));
-	connect(ui->bonusActionSelect, SIGNAL(activated(int)), this, SLOT(updateTakeBonusActionBtn(int)));
-	connect(ui->volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(setVolume(int)));
-
-	connect(combatMngr_, SIGNAL(message(const QString&)), this, SLOT(addMsgToCombatLog(const QString&)));
-	connect(combatMngr_->getNpcTurn(), SIGNAL(message(const QString&)), this, SLOT(addMsgToCombatLog(const QString&)));
-	connect(combatMngr_->getPlayerTurn(), SIGNAL(message(const QString&)), this, SLOT(addMsgToCombatLog(const QString&)));
-	for (auto&& act : combatMngr_->getPlayerTurn()->getActions())
-		connect((QObject*)act, SIGNAL(message(const QString&)), this, SLOT(addMsgToCombatLog(const QString&)));
-	for (auto&& act : combatMngr_->getPlayerTurn()->getBonusActions())
-		connect((QObject*)act, SIGNAL(message(const QString&)), this, SLOT(addMsgToCombatLog(const QString&)));
-	for (auto&& act : combatMngr_->getNpcTurn()->getActions())
-		connect((QObject*)act, SIGNAL(message(const QString&)), this, SLOT(addMsgToCombatLog(const QString&)));
-	for (auto&& act : combatMngr_->getNpcTurn()->getBonusActions())
-		connect((QObject*)act, SIGNAL(message(const QString&)), this, SLOT(addMsgToCombatLog(const QString&)));
-	connect(combatMngr_, SIGNAL(characterDied(characters::AbstractCharacter*)), this, SLOT(handleCharacterDeath(characters::AbstractCharacter*)));
-
 	auto&& name = combatMngr_->getPlayerCharacter()->getName();
 	auto&& className = combatMngr_->getPlayerCharacter()->getClassName();
 	auto&& level = combatMngr_->getPlayerCharacter()->getLevel();
@@ -50,6 +22,10 @@ MainWindow::MainWindow(combat::CombatManager* combatMngr, QWidget* parent)
 
 	int ac = combatMngr_->getPlayerCharacter()->getArmorClass();
 	ui->acLabel->setText(tr("%1").arg(ac));
+
+	connectTurnEvents();
+	connectUiEvents();
+	connectMessages();
 
 	updateUi();
 
@@ -142,4 +118,41 @@ void MainWindow::handleCharacterDeath(characters::AbstractCharacter* character) 
 		tr("%1 character %2 has died").arg(isPlayer ? tr("Player") : tr("Non-player")).arg(character->getName())
 	);
 	close();
+}
+
+void MainWindow::connectTurnEvents() {
+	connect(combatMngr_->getPlayerTurn(), SIGNAL(started()), this, SLOT(updateUi()));
+	connect(combatMngr_->getPlayerTurn(), SIGNAL(actionTaken()), this, SLOT(updateUi()));
+	connect(combatMngr_->getPlayerTurn(), SIGNAL(bonusActionTaken()), this, SLOT(updateUi()));
+	connect(combatMngr_->getPlayerTurn(), SIGNAL(ended()), this, SLOT(updateUi()));
+	connect(combatMngr_->getNpcTurn(), SIGNAL(ended()), this, SLOT(updateUi()));
+	connect(ui->scrollArea->verticalScrollBar(), SIGNAL(rangeChanged(int, int)), this, SLOT(scrollToBottomOfLog(int, int)));
+
+}
+
+void MainWindow::connectUiEvents() {
+	connect(ui->takeActionBtn, SIGNAL(clicked()), this, SLOT(takeAction()));
+	connect(ui->passActionBtn, SIGNAL(clicked()), this, SLOT(passAction()));
+	connect(ui->takeBonusActionBtn, SIGNAL(clicked()), this, SLOT(takeBonusAction()));
+	connect(ui->passBonusActionBtn, SIGNAL(clicked()), this, SLOT(passBonusAction()));
+	connect(ui->actionSelect, SIGNAL(activated(int)), this, SLOT(updateTakeActionBtn(int)));
+	connect(ui->bonusActionSelect, SIGNAL(activated(int)), this, SLOT(updateTakeBonusActionBtn(int)));
+	connect(ui->volumeSlider, SIGNAL(valueChanged(int)), this, SLOT(setVolume(int)));
+
+}
+
+void MainWindow::connectMessages() {
+	connect(combatMngr_, SIGNAL(message(const QString&)), this, SLOT(addMsgToCombatLog(const QString&)));
+	connect(combatMngr_->getNpcTurn(), SIGNAL(message(const QString&)), this, SLOT(addMsgToCombatLog(const QString&)));
+	connect(combatMngr_->getPlayerTurn(), SIGNAL(message(const QString&)), this, SLOT(addMsgToCombatLog(const QString&)));
+	for (auto&& act : combatMngr_->getPlayerTurn()->getActions())
+		connect((QObject*)act, SIGNAL(message(const QString&)), this, SLOT(addMsgToCombatLog(const QString&)));
+	for (auto&& act : combatMngr_->getPlayerTurn()->getBonusActions())
+		connect((QObject*)act, SIGNAL(message(const QString&)), this, SLOT(addMsgToCombatLog(const QString&)));
+	for (auto&& act : combatMngr_->getNpcTurn()->getActions())
+		connect((QObject*)act, SIGNAL(message(const QString&)), this, SLOT(addMsgToCombatLog(const QString&)));
+	for (auto&& act : combatMngr_->getNpcTurn()->getBonusActions())
+		connect((QObject*)act, SIGNAL(message(const QString&)), this, SLOT(addMsgToCombatLog(const QString&)));
+	connect(combatMngr_, SIGNAL(characterDied(characters::AbstractCharacter*)), this, SLOT(handleCharacterDeath(characters::AbstractCharacter*)));
+
 }

@@ -33,6 +33,10 @@ public slots:
 	void handleCharacterDeath(characters::AbstractCharacter* character);
 
 private:
+	void connectTurnEvents();
+	void connectUiEvents();
+	void connectMessages();
+
 	std::unique_ptr<Ui::MainWindow> ui;
 	std::unique_ptr<QMediaPlayer> mediaPlayer_;
 	combat::CombatManager* combatMngr_;

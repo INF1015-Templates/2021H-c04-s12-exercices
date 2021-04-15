@@ -38,7 +38,9 @@
           <item row="0" column="0">
            <widget class="QLabel" name="combatLog">
             <property name="text">
-             <string>This is the combat log</string>
+             <string>This is the combat log
+
+</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
