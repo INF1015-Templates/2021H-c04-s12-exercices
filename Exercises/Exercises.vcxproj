@@ -61,13 +61,19 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(Qt_INCLUDEPATH_);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(Qt_INCLUDEPATH_);.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <WarningLevel>Level4</WarningLevel>
+      <DisableSpecificWarnings>4250</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(SolutionDir);$(Qt_INCLUDEPATH_);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir);$(Qt_INCLUDEPATH_);.\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <WarningLevel>Level4</WarningLevel>
+      <DisableSpecificWarnings>4250</DisableSpecificWarnings>
     </ClCompile>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
@@ -97,32 +103,73 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="company\Manager.cpp" />
-    <ClCompile Include="company\SearchEmployeeByName.cpp" />
-    <ClCompile Include="company\Secretary.cpp" />
-    <QtUic Include="view\CompanyWindow.ui" />
-    <ClCompile Include="company\Company.cpp" />
-    <ClCompile Include="view\CompanyWindow.cpp" />
-    <ClCompile Include="company\Employee.cpp" />
-    <ClCompile Include="company\InsertInMap.cpp" />
-    <ClCompile Include="main.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="view\CompanyWindow.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="company\Employee.hpp" />
-    <ClInclude Include="company\InsertInMap.hpp" />
-    <ClInclude Include="company\Manager.hpp" />
-    <ClInclude Include="utils\List.hpp" />
-    <ClInclude Include="utils\MyClass.hpp" />
-    <ClInclude Include="utils\print.hpp" />
-    <QtMoc Include="company\Company.hpp" />
-    <ClInclude Include="company\SearchEmployeeByName.hpp" />
-    <ClInclude Include="company\Secretary.hpp" />
+    <ClCompile Include="characters\classes\Fighter.cpp" />
+    <ClCompile Include="characters\classes\Monk.cpp" />
+    <ClCompile Include="characters\MeleeWeaponUser.cpp" />
+    <ClCompile Include="combat\Attack.cpp">
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).moc</QtMocFileName>
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
+    </ClCompile>
+    <ClCompile Include="combat\classes\MonkTurn.cpp" />
+    <ClCompile Include="combat\CombatManager.cpp">
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).moc</QtMocFileName>
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
+    </ClCompile>
+    <ClCompile Include="combat\MeleeWeaponAttack.cpp" />
+    <ClCompile Include="combat\Turn.cpp">
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).moc</QtMocFileName>
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
+    </ClCompile>
+    <ClCompile Include="combat\UnarmedStrike.cpp" />
+    <ClCompile Include="main.cpp">
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).moc</QtMocFileName>
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
+    </ClCompile>
+    <ClCompile Include="view\MainWindow.cpp" />
+    <ClCompile Include="stats\Ability.cpp" />
+    <ClCompile Include="stats\StatBlock.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="characters\BasicCharacter.hpp" />
+    <ClInclude Include="characters\AbstractCharacter.hpp" />
+    <ClInclude Include="characters\classes\Fighter.hpp" />
+    <ClInclude Include="characters\classes\Monk.hpp" />
+    <ClInclude Include="characters\MeleeWeaponUser.hpp" />
+    <QtMoc Include="combat\IActivity.hpp" />
+    <QtMoc Include="combat\Attack.hpp" />
+    <ClInclude Include="combat\BaseActivity.hpp" />
+    <QtMoc Include="combat\classes\MonkTurn.hpp" />
+    <QtMoc Include="combat\CombatManager.hpp" />
+    <ClInclude Include="combat\fwddecl.hpp" />
+    <QtMoc Include="combat\MeleeWeaponAttack.hpp" />
+    <QtMoc Include="combat\Turn.hpp" />
+    <QtMoc Include="combat\UnarmedStrike.hpp" />
+    <QtMoc Include="view\MainWindow.hpp" />
+    <ClInclude Include="spells\builtins.hpp" />
+    <ClInclude Include="spells\GenericSpell.hpp" />
+    <ClInclude Include="spells\ISpell.hpp" />
+    <ClInclude Include="stats\Ability.hpp" />
+    <ClInclude Include="stats\StatBlock.hpp" />
+    <ClInclude Include="utils\DiceRoller.hpp" />
+    <ClInclude Include="utils\Die.hpp" />
+    <QtMoc Include="view\InfoPrinter.hpp" />
+    <ClInclude Include="weapons\IWeapon.hpp" />
+    <ClInclude Include="weapons\melee\GenericMeleeWeapon.hpp" />
+    <ClInclude Include="weapons\melee\IMeleeWeapon.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="view\MainWindow.ui" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
