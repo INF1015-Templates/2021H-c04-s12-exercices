@@ -21,6 +21,8 @@ class Turn : public QObject {
 	Q_OBJECT
 
 public:
+	static constexpr int skipActivity = -1;
+
 	Turn(characters::AbstractCharacter* character, characters::AbstractCharacter* opponent);
 
 	virtual ~Turn() = default;

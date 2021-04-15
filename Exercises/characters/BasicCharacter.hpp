@@ -36,7 +36,6 @@ public:
 	std::tuple<int, int, bool> rollUnarmedAttack() override;
 	int rollUnarmedDamage(bool crit) override;
 
-
 private:
 	QString name_;
 	int level_ = 1;

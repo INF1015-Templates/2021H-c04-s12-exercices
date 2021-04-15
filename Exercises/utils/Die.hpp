@@ -12,7 +12,6 @@
 
 namespace utils {
 
-
 template <int numSides>
 class Die {
 public:

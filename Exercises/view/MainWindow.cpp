@@ -27,6 +27,13 @@ MainWindow::MainWindow(combat::CombatManager* combatMngr, QWidget* parent)
 	connectUiEvents();
 	connectMessages();
 
+	ui->actionSelect->clear();
+	ui->bonusActionSelect->clear();
+	for (auto&& elem : combatMngr_->getPlayerTurn()->getActions())
+		ui->actionSelect->addItem(elem->getName());
+	for (auto&& elem : combatMngr_->getPlayerTurn()->getBonusActions())
+		ui->bonusActionSelect->addItem(elem->getName());
+
 	updateUi();
 
 	combatMngr->startCurrentTurn();
@@ -55,12 +62,6 @@ void MainWindow::updateUi() {
 		wid->setEnabled(bonusActionAvailable);
 
 	if (combatMngr_->getCurrentTurn() == combatMngr_->getPlayerTurn()) {
-		ui->actionSelect->clear();
-		ui->bonusActionSelect->clear();
-		for (auto&& elem : combatMngr_->getPlayerTurn()->getActions())
-			ui->actionSelect->addItem(elem->getName());
-		for (auto&& elem : combatMngr_->getPlayerTurn()->getBonusActions())
-			ui->bonusActionSelect->addItem(elem->getName());
 		updateTakeActionBtn(0);
 		updateTakeBonusActionBtn(0);
 	}
@@ -98,7 +99,7 @@ void MainWindow::takeAction() {
 }
 
 void MainWindow::passAction() {
-	combatMngr_->getPlayerTurn()->takeAction(-1);
+	combatMngr_->getPlayerTurn()->takeAction(combat::Turn::skipActivity);
 }
 
 void MainWindow::takeBonusAction() {
@@ -107,7 +108,7 @@ void MainWindow::takeBonusAction() {
 }
 
 void MainWindow::passBonusAction() {
-	combatMngr_->getPlayerTurn()->takeBonusAction(-1);
+	combatMngr_->getPlayerTurn()->takeBonusAction(combat::Turn::skipActivity);
 }
 
 void MainWindow::handleCharacterDeath(characters::AbstractCharacter* character) {
@@ -127,7 +128,6 @@ void MainWindow::connectTurnEvents() {
 	connect(combatMngr_->getPlayerTurn(), SIGNAL(ended()), this, SLOT(updateUi()));
 	connect(combatMngr_->getNpcTurn(), SIGNAL(ended()), this, SLOT(updateUi()));
 	connect(ui->scrollArea->verticalScrollBar(), SIGNAL(rangeChanged(int, int)), this, SLOT(scrollToBottomOfLog(int, int)));
-
 }
 
 void MainWindow::connectUiEvents() {

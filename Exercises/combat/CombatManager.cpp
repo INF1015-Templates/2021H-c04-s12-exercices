@@ -109,12 +109,12 @@ void CombatManager::loadCharacters() {
 		monk2->levelUp(true);
 	}
 
-	//playerTurn_ = std::make_unique<classes::MonkTurn>(monk1.get(), monk2.get());
-	//npcTurn_ = std::make_unique<classes::MonkTurn>(monk2.get(), monk1.get());
-	//playerCharacter_ = std::move(monk1);
-	playerTurn_ = std::make_unique<classes::FighterTurn>(fighter1.get(), monk2.get());
-	npcTurn_ = std::make_unique<classes::MonkTurn>(monk2.get(), fighter1.get());
-	playerCharacter_ = std::move(fighter1);
+	playerTurn_ = std::make_unique<classes::MonkTurn>(monk1.get(), monk2.get());
+	npcTurn_ = std::make_unique<classes::MonkTurn>(monk2.get(), monk1.get());
+	playerCharacter_ = std::move(monk1);
+	//playerTurn_ = std::make_unique<classes::FighterTurn>(fighter1.get(), monk2.get());
+	//npcTurn_ = std::make_unique<classes::MonkTurn>(monk2.get(), fighter1.get());
+	//playerCharacter_ = std::move(fighter1);
 	npcCharacter_ = std::move(monk2);
 }
 
