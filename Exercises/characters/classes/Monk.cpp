@@ -50,7 +50,7 @@ std::tuple<int, int, bool> Monk::rollUnarmedAttack() {
 	bool isCritMiss = natRoll == 1;
 	if (isCritMiss)
 		return {natRoll, 0, false};
-	return {natRoll, totalRoll, isCrit};
+	return {natRoll, totalRoll, isCritHit};
 }
 
 int Monk::rollUnarmedDamage(bool crit) {
